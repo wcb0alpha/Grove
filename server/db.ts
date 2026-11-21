@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import type {
+  AutoScraperMonitor,
   IngestLogEntry,
   Lead,
   OutreachSequence,
@@ -271,7 +272,42 @@ function seedWorkspace(): WorkspaceSnapshot {
     },
   ];
 
-  return { leads, sequences, ingestLogs };
+  const monitors = defaultUkMonitors();
+
+  return { leads, sequences, ingestLogs, monitors };
+}
+
+function defaultUkMonitors(): AutoScraperMonitor[] {
+  return [
+    {
+      id: 'mon-uk-01',
+      name: 'South West UK Trades (Bristol & Bath)',
+      ukLocations: ['Bristol BS8', 'Bath BA1'],
+      categories: ['Roofing Contractors', 'Boiler & Heating Engineers'],
+      intervalMinutes: 360,
+      enabled: false,
+      autoEnrich: true,
+      maxPerRun: 5,
+      lastStatus: 'idle',
+      lastSummary: 'Ready to run — click Run Now or enable scheduled auto-scraping.',
+      totalLeadsCaptured: 0,
+      createdAt: '2026-11-20T09:00:00.000Z',
+    },
+    {
+      id: 'mon-uk-02',
+      name: 'Greater London & Manchester Clinics',
+      ukLocations: ['Richmond London TW9', 'Didsbury Manchester M20'],
+      categories: ['Private Dental Practice', 'Garden Landscaping'],
+      intervalMinutes: 1440,
+      enabled: false,
+      autoEnrich: false,
+      maxPerRun: 5,
+      lastStatus: 'idle',
+      lastSummary: 'Ready to run — targets public nextdoor.co.uk/pages directory listings.',
+      totalLeadsCaptured: 0,
+      createdAt: '2026-11-20T11:30:00.000Z',
+    },
+  ];
 }
 
 function ensureDbFile(): void {
@@ -288,11 +324,20 @@ function readSnapshot(): WorkspaceSnapshot {
   ensureDbFile();
   try {
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    const parsed = JSON.parse(raw) as WorkspaceSnapshot;
+    const parsed = JSON.parse(raw) as Partial<WorkspaceSnapshot>;
     if (!Array.isArray(parsed.leads) || !Array.isArray(parsed.sequences)) {
       throw new Error('Corrupt DB structure');
     }
-    return parsed;
+    const snapshot: WorkspaceSnapshot = {
+      leads: parsed.leads,
+      sequences: parsed.sequences,
+      ingestLogs: Array.isArray(parsed.ingestLogs) ? parsed.ingestLogs : [],
+      monitors: Array.isArray(parsed.monitors) ? parsed.monitors : defaultUkMonitors(),
+    };
+    if (!Array.isArray(parsed.monitors)) {
+      writeSnapshot(snapshot);
+    }
+    return snapshot;
   } catch {
     const fallback = seedWorkspace();
     writeSnapshot(fallback);
@@ -442,6 +487,57 @@ export function deleteSequence(id: string): boolean {
   const before = snapshot.sequences.length;
   snapshot.sequences = snapshot.sequences.filter((s) => s.id !== id);
   if (snapshot.sequences.length === before) return false;
+  writeSnapshot(snapshot);
+  return true;
+}
+
+export function getMonitors(): AutoScraperMonitor[] {
+  return readSnapshot().monitors;
+}
+
+export function getMonitorById(id: string): AutoScraperMonitor | undefined {
+  return readSnapshot().monitors.find((m) => m.id === id);
+}
+
+export function createMonitor(
+  input: Omit<AutoScraperMonitor, 'id' | 'createdAt' | 'lastStatus' | 'lastSummary' | 'totalLeadsCaptured'>
+): AutoScraperMonitor {
+  const snapshot = readSnapshot();
+  const monitor: AutoScraperMonitor = {
+    ...input,
+    id: `mon-${crypto.randomUUID().slice(0, 8)}`,
+    lastStatus: 'idle',
+    lastSummary: 'Monitor created — click Run Now or turn on automatic scheduling.',
+    totalLeadsCaptured: 0,
+    createdAt: new Date().toISOString(),
+  };
+  snapshot.monitors.unshift(monitor);
+  writeSnapshot(snapshot);
+  return monitor;
+}
+
+export function updateMonitor(
+  id: string,
+  patch: Partial<AutoScraperMonitor>
+): AutoScraperMonitor | null {
+  const snapshot = readSnapshot();
+  const idx = snapshot.monitors.findIndex((m) => m.id === id);
+  if (idx === -1) return null;
+  snapshot.monitors[idx] = {
+    ...snapshot.monitors[idx],
+    ...patch,
+    id: snapshot.monitors[idx].id,
+    createdAt: snapshot.monitors[idx].createdAt,
+  };
+  writeSnapshot(snapshot);
+  return snapshot.monitors[idx];
+}
+
+export function deleteMonitor(id: string): boolean {
+  const snapshot = readSnapshot();
+  const before = snapshot.monitors.length;
+  snapshot.monitors = snapshot.monitors.filter((m) => m.id !== id);
+  if (snapshot.monitors.length === before) return false;
   writeSnapshot(snapshot);
   return true;
 }

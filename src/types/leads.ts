@@ -93,8 +93,25 @@ export interface IngestLogEntry {
   summary: string;
 }
 
+export interface AutoScraperMonitor {
+  id: string;
+  name: string;
+  ukLocations: string[];
+  categories: string[];
+  intervalMinutes: number;
+  enabled: boolean;
+  autoEnrich: boolean;
+  maxPerRun: number;
+  lastRunAt?: string;
+  lastStatus: 'idle' | 'running' | 'success' | 'error';
+  lastSummary: string;
+  totalLeadsCaptured: number;
+  createdAt: string;
+}
+
 export interface WorkspaceSnapshot {
   leads: Lead[];
   sequences: OutreachSequence[];
   ingestLogs: IngestLogEntry[];
+  monitors: AutoScraperMonitor[];
 }

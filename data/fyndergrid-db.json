@@ -246,5 +246,47 @@
       "neighborhood": "Richmond & Twickenham, London",
       "summary": "Imported UK local business directory page & active Local Deal offer"
     }
+  ],
+  "monitors": [
+    {
+      "id": "mon-uk-01",
+      "name": "South West UK Trades (Bristol & Bath)",
+      "ukLocations": [
+        "Bristol BS8",
+        "Bath BA1"
+      ],
+      "categories": [
+        "Roofing Contractors",
+        "Boiler & Heating Engineers"
+      ],
+      "intervalMinutes": 360,
+      "enabled": false,
+      "autoEnrich": true,
+      "maxPerRun": 5,
+      "lastStatus": "idle",
+      "lastSummary": "Ready to run — click Run Now or enable scheduled auto-scraping.",
+      "totalLeadsCaptured": 0,
+      "createdAt": "2026-11-20T09:00:00.000Z"
+    },
+    {
+      "id": "mon-uk-02",
+      "name": "Greater London & Manchester Clinics",
+      "ukLocations": [
+        "Richmond London TW9",
+        "Didsbury Manchester M20"
+      ],
+      "categories": [
+        "Private Dental Practice",
+        "Garden Landscaping"
+      ],
+      "intervalMinutes": 1440,
+      "enabled": false,
+      "autoEnrich": false,
+      "maxPerRun": 5,
+      "lastStatus": "idle",
+      "lastSummary": "Ready to run — targets public nextdoor.co.uk/pages directory listings.",
+      "totalLeadsCaptured": 0,
+      "createdAt": "2026-11-20T11:30:00.000Z"
+    }
   ]
 }

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Compass,
   Download,
+  HelpCircle,
   Layers,
   Loader2,
   Menu,
@@ -12,6 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import type {
+  AutoScraperMonitor,
   IngestLogEntry,
   Lead,
   OutreachSequence,
@@ -22,8 +24,9 @@ import LeadDiscoveryView from './components/LeadDiscoveryView';
 import PipelineCrmView from './components/PipelineCrmView';
 import EnrichmentView from './components/EnrichmentView';
 import OutreachView from './components/OutreachView';
+import HelpGuideView from './components/HelpGuideView';
 
-type NavSection = 'scraper' | 'discovery' | 'crm' | 'enrichment' | 'outreach';
+type NavSection = 'scraper' | 'discovery' | 'crm' | 'enrichment' | 'outreach' | 'help';
 
 const NAV_ITEMS: Array<{
   id: NavSection;
@@ -35,6 +38,7 @@ const NAV_ITEMS: Array<{
   { id: 'crm', label: 'Pipeline CRM', icon: Table2 },
   { id: 'enrichment', label: 'Waterfall Enrichment', icon: Layers },
   { id: 'outreach', label: 'Outreach Sequences', icon: Send },
+  { id: 'help', label: 'Help & Guide', icon: HelpCircle },
 ];
 
 const AVATAR_URL = '/src/assets/images/avatar_workspace_owner_1795292568269.jpg';
@@ -46,6 +50,7 @@ export default function App() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [sequences, setSequences] = useState<OutreachSequence[]>([]);
   const [ingestLogs, setIngestLogs] = useState<IngestLogEntry[]>([]);
+  const [monitors, setMonitors] = useState<AutoScraperMonitor[]>([]);
   const [loadingWorkspace, setLoadingWorkspace] = useState(true);
 
   const [enrichingId, setEnrichingId] = useState<string | null>(null);
@@ -89,6 +94,7 @@ export default function App() {
       setLeads(data.leads ?? []);
       setSequences(data.sequences ?? []);
       setIngestLogs(data.ingestLogs ?? []);
+      setMonitors(data.monitors ?? []);
     } catch {
       notify('Unable to reach FynderGrid server.', 'error');
     } finally {
@@ -426,6 +432,7 @@ export default function App() {
               {section === 'scraper' && (
                 <NextdoorScraperView
                   ingestLogs={ingestLogs}
+                  monitors={monitors}
                   onLeadsImported={loadWorkspace}
                   onNotify={notify}
                 />
@@ -471,6 +478,9 @@ export default function App() {
                   }}
                   onNotify={notify}
                 />
+              )}
+              {section === 'help' && (
+                <HelpGuideView onNavigate={(target) => setSection(target)} />
               )}
             </>
           )}

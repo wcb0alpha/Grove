@@ -18,13 +18,19 @@ import {
   Webhook,
   X,
 } from 'lucide-react';
-import type { GithubRepoSummary, IngestLogEntry, Lead } from '../types/leads';
+import type {
+  AutoScraperMonitor,
+  GithubRepoSummary,
+  IngestLogEntry,
+  Lead,
+} from '../types/leads';
 import {
   formatShortDate,
   generateScraperScript,
   safeExternalUrl,
   type ScriptBuilderConfig,
 } from '../utils/format';
+import UkAutoScraperPanel from './UkAutoScraperPanel';
 
 interface ParsedAdPreview {
   companyName: string;
@@ -46,6 +52,7 @@ interface ParsedAdPreview {
 
 interface NextdoorScraperViewProps {
   ingestLogs: IngestLogEntry[];
+  monitors: AutoScraperMonitor[];
   onLeadsImported: () => Promise<void>;
   onNotify: (message: string, tone?: 'success' | 'error') => void;
 }
@@ -82,10 +89,11 @@ const SAMPLE_NEXTDOOR_DUMP = `[
 
 export default function NextdoorScraperView({
   ingestLogs,
+  monitors,
   onLeadsImported,
   onNotify,
 }: NextdoorScraperViewProps) {
-  const [subTab, setSubTab] = useState<'parser' | 'repos' | 'builder'>('parser');
+  const [subTab, setSubTab] = useState<'auto' | 'parser' | 'repos' | 'builder'>('auto');
 
   // Feed Parser state
   const [rawContent, setRawContent] = useState('');
@@ -373,15 +381,27 @@ export default function NextdoorScraperView({
       <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            Nextdoor Ad & Business Scraper
+            Nextdoor UK Ad & Business Scraper
           </h1>
           <p className="mt-1 text-sm text-slate-600 max-w-2xl">
-            Connect open-source GitHub Nextdoor scraper repositories, generate ready-to-run browser
-            automation scripts, and parse sponsored feed exports straight into your lead pipeline.
+            Automatically scrape public <code className="font-mono text-xs">nextdoor.co.uk/pages</code>{' '}
+            leads by UK postcode, or connect GitHub browser scripts to stream logged-in sponsored
+            feed ads into your CRM.
           </p>
         </div>
 
-        <div className="flex items-center gap-1 rounded-lg bg-slate-100 p-1 self-start">
+        <div className="flex items-center gap-1 rounded-lg bg-slate-100 p-1 self-start overflow-x-auto max-w-full">
+          <button
+            type="button"
+            onClick={() => setSubTab('auto')}
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+              subTab === 'auto'
+                ? 'bg-white text-slate-900 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Auto-Scraper (UK)
+          </button>
           <button
             type="button"
             onClick={() => setSubTab('parser')}
@@ -417,6 +437,15 @@ export default function NextdoorScraperView({
           </button>
         </div>
       </div>
+
+      {/* TAB 0: AUTOMATED UK POSTCODE AUTO-SCRAPER */}
+      {subTab === 'auto' && (
+        <UkAutoScraperPanel
+          monitors={monitors}
+          onRefreshWorkspace={onLeadsImported}
+          onNotify={onNotify}
+        />
+      )}
 
       {/* TAB 1: FEED & EXPORT PARSER */}
       {subTab === 'parser' && (

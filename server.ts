@@ -6,14 +6,23 @@ import { z } from 'zod';
 import {
   createLead,
   createLeadsBulk,
+  createMonitor,
   createSequence,
   deleteLead,
+  deleteMonitor,
   deleteSequence,
   getLeadById,
+  getMonitors,
   getWorkspace,
   updateLead,
+  updateMonitor,
   updateSequence,
 } from './server/db.ts';
+import {
+  executeMonitorRun,
+  runInstantUkAutoScrape,
+  startAutoScraperScheduler,
+} from './server/autoscraper.ts';
 import {
   discoverProspects,
   draftPersonalizedOutreach,
@@ -143,6 +152,23 @@ const createSequenceSchema = z.object({
     )
     .min(1)
     .max(10),
+});
+
+const createMonitorSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  ukLocations: z.array(z.string().trim().min(2).max(80)).min(1).max(10),
+  categories: z.array(z.string().trim().min(2).max(80)).min(1).max(8),
+  intervalMinutes: z.number().int().min(15).max(10080).default(360),
+  enabled: z.boolean().default(false),
+  autoEnrich: z.boolean().default(true),
+  maxPerRun: z.number().int().min(1).max(10).default(5),
+});
+
+const instantAutoScrapeSchema = z.object({
+  ukLocation: z.string().trim().min(2).max(120),
+  category: z.string().trim().min(2).max(120),
+  maxResults: z.number().int().min(1).max(10).default(5),
+  autoEnrich: z.boolean().default(true),
 });
 
 function csvCell(value: string): string {
@@ -489,6 +515,70 @@ async function startServer() {
     res.json({ ok: true });
   });
 
+  // UK Postcode Auto-Scraper & Scheduled Monitors
+  app.post('/api/autoscraper/run-instant', async (req, res) => {
+    const parsed = instantAutoScrapeSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: 'Provide a valid UK postcode/town and trade niche.' });
+      return;
+    }
+    try {
+      const result = await runInstantUkAutoScrape(parsed.data);
+      res.json(result);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Auto-scrape failed';
+      res.status(502).json({ error: message });
+    }
+  });
+
+  app.get('/api/monitors', (_req, res) => {
+    res.json({ monitors: getMonitors() });
+  });
+
+  app.post('/api/monitors', (req, res) => {
+    const parsed = createMonitorSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: 'Invalid UK monitor configuration', details: parsed.error.flatten() });
+      return;
+    }
+    const monitor = createMonitor(parsed.data);
+    res.status(201).json({ monitor });
+  });
+
+  app.patch('/api/monitors/:id', (req, res) => {
+    const parsed = createMonitorSchema.partial().safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: 'Invalid monitor update payload' });
+      return;
+    }
+    const updated = updateMonitor(req.params.id, parsed.data);
+    if (!updated) {
+      res.status(404).json({ error: 'Monitor not found' });
+      return;
+    }
+    res.json({ monitor: updated });
+  });
+
+  app.delete('/api/monitors/:id', (req, res) => {
+    const ok = deleteMonitor(req.params.id);
+    if (!ok) {
+      res.status(404).json({ error: 'Monitor not found' });
+      return;
+    }
+    res.json({ ok: true });
+  });
+
+  app.post('/api/monitors/:id/run', async (req, res) => {
+    try {
+      const result = await executeMonitorRun(req.params.id);
+      res.json(result);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Monitor run failed';
+      const status = message === 'Monitor not found' ? 404 : message.includes('already running') ? 409 : 502;
+      res.status(status).json({ error: message });
+    }
+  });
+
   // Mount Vite dev middleware or serve static build
   if (!isProduction) {
     const { createServer: createViteServer } = await import('vite');
@@ -509,6 +599,8 @@ async function startServer() {
       }
     });
   }
+
+  startAutoScraperScheduler();
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`FynderGrid server listening on http://0.0.0.0:${PORT}`);
