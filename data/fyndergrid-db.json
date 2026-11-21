@@ -1,0 +1,250 @@
+{
+  "leads": [
+    {
+      "id": "lead-nd-uk-01",
+      "companyName": "Cotswold Timber & Garden Rooms Ltd",
+      "contactName": "Oliver Bennett",
+      "contactRole": "Founder & Surveyor",
+      "category": "Outdoor Living & Carpentry",
+      "neighborhood": "Clifton & Redland (BS8)",
+      "city": "Bristol, UK",
+      "email": "oliver@cotswoldgardenrooms.co.uk",
+      "emailStatus": "verified_mx",
+      "phone": "0117 496 0148",
+      "website": "https://cotswoldgardenrooms.co.uk",
+      "nextdoorUrl": "https://nextdoor.co.uk/pages/cotswold-timber-garden-rooms-bristol/",
+      "source": "nextdoor_ad",
+      "sourceRepo": "chanwooh/Nextdoor-Script",
+      "stage": "enriched",
+      "adHeadline": "Bespoke Cedar Garden Offices — £450 Off for Clifton Neighbours",
+      "adBody": "Insulated Western Red Cedar garden rooms and covered pergolas built in 5 days. Locally run in Bristol with 42 neighbourhood recommendations.",
+      "adOffer": "£450 off bookings confirmed before month-end",
+      "adFormat": "Sponsored Post",
+      "notes": "Actively running paid Nextdoor UK carousel ads targeting BS8 and BS6 postcodes. Strong fit for landing-page conversion optimisation and local quote capture.",
+      "citations": [
+        {
+          "title": "Nextdoor UK Business Directory — Bristol Home & Garden",
+          "url": "https://nextdoor.co.uk/pages/"
+        }
+      ],
+      "enrichmentSteps": [
+        {
+          "step": "Domain & DNS MX Verification",
+          "provider": "DNS Resolver",
+          "status": "verified",
+          "detail": "MX records active (Google Workspace UK mail exchanger)",
+          "checkedAt": "2026-11-21T20:41:36.169Z"
+        },
+        {
+          "step": "Nextdoor UK Advertiser Footprint",
+          "provider": "Sponsored Feed Parser",
+          "status": "found",
+          "detail": "Active sponsored post detected across BS6, BS8, and BS9 postcodes",
+          "checkedAt": "2026-11-21T20:41:36.169Z"
+        }
+      ],
+      "lastEnrichedAt": "2026-11-21T20:41:36.169Z",
+      "createdAt": "2026-11-18T14:20:00.000Z",
+      "updatedAt": "2026-11-21T20:41:36.169Z"
+    },
+    {
+      "id": "lead-nd-uk-02",
+      "companyName": "Thames Valley Boiler & Heating",
+      "contactName": "Hannah Gallagher",
+      "contactRole": "Operations Manager",
+      "category": "Boiler & Heating Engineers",
+      "neighborhood": "Richmond & Twickenham (TW1)",
+      "city": "London, UK",
+      "email": "hannah@thamesvalleyheating.co.uk",
+      "emailStatus": "verified_mx",
+      "phone": "020 7946 0192",
+      "website": "https://thamesvalleyheating.co.uk",
+      "nextdoorUrl": "https://nextdoor.co.uk/pages/thames-valley-heating-london/",
+      "source": "nextdoor_ad",
+      "sourceRepo": "krautsdubisq1g/nextdoor-business-scraper",
+      "stage": "contacted",
+      "adHeadline": "£69 Gas Safe Boiler Service — Same-Week Visits in Richmond",
+      "adBody": "Family-run Gas Safe registered engineers covering TW1, TW9, and SW14 for winter boiler servicing, powerflushing, and heat pump grants.",
+      "adOffer": "£69 winter boiler safety service",
+      "adFormat": "Local Deal",
+      "notes": "Running seasonal Nextdoor UK Local Deals. Sent email sequence step 1 highlighting mobile callback gap on their Nextdoor offer page.",
+      "citations": [],
+      "enrichmentSteps": [
+        {
+          "step": "Domain & DNS MX Verification",
+          "provider": "DNS Resolver",
+          "status": "verified",
+          "detail": "MX records confirmed on thamesvalleyheating.co.uk",
+          "checkedAt": "2026-11-21T20:41:36.169Z"
+        }
+      ],
+      "lastEnrichedAt": "2026-11-21T20:41:36.169Z",
+      "createdAt": "2026-11-17T10:05:00.000Z",
+      "updatedAt": "2026-11-21T20:41:36.169Z"
+    },
+    {
+      "id": "lead-nd-uk-03",
+      "companyName": "Didsbury Smile Dental Studio",
+      "contactName": "Dr. Priya Patel",
+      "contactRole": "Principal Dentist",
+      "category": "Dental & Orthodontics",
+      "neighborhood": "Didsbury & Chorlton (M20)",
+      "city": "Manchester, UK",
+      "email": "reception@didsburysmile.co.uk",
+      "emailStatus": "pattern_only",
+      "phone": "0161 496 0174",
+      "website": "https://didsburysmile.co.uk",
+      "nextdoorUrl": "https://nextdoor.co.uk/pages/didsbury-smile-dental-manchester/",
+      "source": "nextdoor_page",
+      "sourceRepo": "DrBenedictPorkins/sponsored-blur-nextdoor",
+      "stage": "new",
+      "adHeadline": "New Patient Consultation & 3D Scan — Evening Appointments Open",
+      "adBody": "Independent dental clinic on Wilmslow Road. Mention our Nextdoor post for complimentary whitening consultation with your new patient exam.",
+      "adOffer": "Complimentary whitening consultation for new patients",
+      "adFormat": "Sponsored Post",
+      "notes": "Captured via sponsored post selector scan on nextdoor.co.uk. Ready for waterfall enrichment to locate practice manager contact.",
+      "citations": [],
+      "enrichmentSteps": [],
+      "createdAt": "2026-11-19T18:45:00.000Z",
+      "updatedAt": "2026-11-21T20:41:36.169Z"
+    },
+    {
+      "id": "lead-nd-uk-04",
+      "companyName": "Peak Slate Roofing & Solar Ltd",
+      "contactName": "Callum Wright",
+      "contactRole": "Commercial Director",
+      "category": "Roofing & Solar",
+      "neighborhood": "Ecclesall & Dore (S11)",
+      "city": "Sheffield, UK",
+      "email": "cwright@peakslateroofing.co.uk",
+      "emailStatus": "verified_mx",
+      "phone": "0114 496 0163",
+      "website": "https://peakslateroofing.co.uk",
+      "nextdoorUrl": "https://nextdoor.co.uk/pages/peak-slate-roofing-sheffield/",
+      "source": "github_import",
+      "sourceRepo": "MeltanoLabs/tap-nextdoor",
+      "stage": "qualified",
+      "adHeadline": "Free Drone Roof & Slate Inspection Ahead of Winter Gales",
+      "adBody": "NFRC-accredited Yorkshire roofing and solar installers serving S10, S11, and S17. 10-year workmanship guarantee on slate re-roofs.",
+      "adOffer": "Free 24-point drone roof survey report",
+      "adFormat": "Neighborhood Banner",
+      "notes": "Replied positively on 20 Nov — booked discovery call to automate their multi-postcode Nextdoor UK lead capture.",
+      "citations": [],
+      "enrichmentSteps": [
+        {
+          "step": "Domain & DNS MX Verification",
+          "provider": "DNS Resolver",
+          "status": "verified",
+          "detail": "MX active via Microsoft 365 UK",
+          "checkedAt": "2026-11-21T20:41:36.169Z"
+        },
+        {
+          "step": "Decision Maker Discovery",
+          "provider": "Public Web Grounding",
+          "status": "found",
+          "detail": "Confirmed Commercial Director overseeing South Yorkshire ad spend",
+          "checkedAt": "2026-11-21T20:41:36.169Z"
+        }
+      ],
+      "lastEnrichedAt": "2026-11-21T20:41:36.169Z",
+      "createdAt": "2026-11-15T09:15:00.000Z",
+      "updatedAt": "2026-11-21T20:41:36.169Z"
+    },
+    {
+      "id": "lead-nd-uk-05",
+      "companyName": "Morningside Turf & Garden Care",
+      "contactName": "Fiona MacLeod",
+      "contactRole": "Director",
+      "category": "Landscaping & Garden Maintenance",
+      "neighborhood": "Morningside & Bruntsfield (EH10)",
+      "city": "Edinburgh, UK",
+      "email": "",
+      "emailStatus": "missing",
+      "phone": "0131 496 0129",
+      "website": "https://morningsideturf.example",
+      "nextdoorUrl": "https://nextdoor.co.uk/pages/morningside-turf-edinburgh/",
+      "source": "nextdoor_ad",
+      "sourceRepo": "chanwooh/Nextdoor-Script",
+      "stage": "new",
+      "adHeadline": "Autumn Lawn Scarification & Hedge Tidy Slots Filling in EH10",
+      "adBody": "Local Edinburgh garden maintenance team offering stone patio jet-washing and winter lawn prep. 15% multi-neighbour booking discount.",
+      "adOffer": "15% multi-neighbour bundle discount",
+      "adFormat": "Sponsored Post",
+      "notes": "Imported from nextdoor.co.uk feed scrape without email — ready for Waterfall Enrichment run.",
+      "citations": [],
+      "enrichmentSteps": [],
+      "createdAt": "2026-11-20T16:10:00.000Z",
+      "updatedAt": "2026-11-21T20:41:36.169Z"
+    }
+  ],
+  "sequences": [
+    {
+      "id": "seq-nd-uk-advertisers",
+      "name": "Nextdoor UK Active Advertisers — Conversion Audit",
+      "targetNiche": "UK Trades & Home Services (Heating, Roofing, Landscaping)",
+      "status": "Active",
+      "enrolledCount": 18,
+      "replyRateLabel": "22.4% reply rate",
+      "createdAt": "2026-11-10T12:00:00.000Z",
+      "steps": [
+        {
+          "id": "step-1",
+          "dayOffset": 0,
+          "channel": "Email",
+          "subject": "Saw your {{neighborhood}} Nextdoor ad — quick landing page note",
+          "body": "Hi {{contactName}},\n\nI came across {{companyName}}'s sponsored post in {{neighborhood}} featuring \"{{adOffer}}\". The offer itself is strong, but when neighbours tap through on mobile there is no instant postcode quote form.\n\nWe help UK local service teams convert Nextdoor ad clicks into booked surveys at double the rate. Open to a 4-minute teardown video tailored to your current ad?\n\nBest regards,\nMaya"
+        },
+        {
+          "id": "step-2",
+          "dayOffset": 3,
+          "channel": "Email",
+          "subject": "Re: {{companyName}} in {{neighborhood}}",
+          "body": "Hi {{contactName}},\n\nFollowing up briefly — I mocked up a postcode-specific landing header for {{companyName}} matching your \"{{adHeadline}}\" copy. Happy to send the preview link across if useful?"
+        },
+        {
+          "id": "step-3",
+          "dayOffset": 7,
+          "channel": "Nextdoor DM",
+          "subject": "Quick note on your local deal",
+          "body": "Hi {{contactName}}, great seeing {{companyName}} active in {{neighborhood}} this week. Dropped a brief conversion idea to your work inbox if you are scaling local enquiries this quarter."
+        }
+      ]
+    },
+    {
+      "id": "seq-dental-uk",
+      "name": "UK Private Practices — Neighbour Trust & Reactivation",
+      "targetNiche": "UK Dental, Aesthetics & Physiotherapy Clinics",
+      "status": "Draft",
+      "enrolledCount": 6,
+      "replyRateLabel": "16.7% reply rate",
+      "createdAt": "2026-11-14T09:30:00.000Z",
+      "steps": [
+        {
+          "id": "step-d1",
+          "dayOffset": 0,
+          "channel": "Email",
+          "subject": "Turning {{neighborhood}} Nextdoor recommendations into booked visits",
+          "body": "Hi {{contactName}},\n\nNoticed {{companyName}} promoting \"{{adOffer}}\" to {{neighborhood}} residents. UK clinics running Nextdoor ads often lose half their enquiries when patients have to ring during reception hours.\n\nHappy to share how similar practices add 15–25 new local patients a month from the exact same ad spend."
+        }
+      ]
+    }
+  ],
+  "ingestLogs": [
+    {
+      "id": "log-uk-01",
+      "receivedAt": "2026-11-20T16:10:00.000Z",
+      "sourceRepo": "chanwooh/Nextdoor-Script",
+      "recordsParsed": 2,
+      "neighborhood": "Clifton (BS8) & Morningside (EH10)",
+      "summary": "Parsed 2 sponsored feed cards via Nextdoor-Script JSON export (nextdoor.co.uk)"
+    },
+    {
+      "id": "log-uk-02",
+      "receivedAt": "2026-11-18T11:30:00.000Z",
+      "sourceRepo": "krautsdubisq1g/nextdoor-business-scraper",
+      "recordsParsed": 1,
+      "neighborhood": "Richmond & Twickenham, London",
+      "summary": "Imported UK local business directory page & active Local Deal offer"
+    }
+  ]
+}

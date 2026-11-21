@@ -1,0 +1,8 @@
+{
+  "name": "FynderGrid",
+  "description": "B2B and local lead generation suite with integrated Nextdoor ad and business scraping, GitHub scraper repository hub, waterfall enrichment, and outreach sequences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
